@@ -295,10 +295,27 @@ function getSecondItems(arr) {
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
 function propagateItemsByPositionIndex(arr) {
-  if (arr.length === 0) {
-    return [];
+  if (arr.length < 2) {
+    return arr;
   }
-  return arr.map((el) => el);
+  const newArr = arr.map((el, i) => `${el} `.repeat(i + 1)).join(' ').split(' ').filter((el) => el !== '');
+  const res = newArr.map((el) => {
+    if (el === 'null') {
+      return null;
+    }
+    if (!Number.isNaN(Number(el))) {
+      return Number(el);
+    }
+    if (el === 'true') {
+      return true;
+    }
+    if (el === 'false') {
+      return false;
+    }
+    return el;
+  });
+
+  return res;
 }
 
 
@@ -350,8 +367,69 @@ function getPositivesCount(arr) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const needToSort = arr.map((el) => {
+    if (el === 'zero') {
+      return 0;
+    }
+    if (el === 'one') {
+      return 1;
+    }
+    if (el === 'two') {
+      return 2;
+    }
+    if (el === 'three') {
+      return 3;
+    }
+    if (el === 'four') {
+      return 4;
+    }
+    if (el === 'five') {
+      return 5;
+    }
+    if (el === 'six') {
+      return 6;
+    }
+    if (el === 'seven') {
+      return 7;
+    }
+    if (el === 'eight') {
+      return 8;
+    }
+    return 9;
+  });
+  const sorted = needToSort.sort((a, b) => a - b);
+  const res = sorted.map((el) => {
+    if (el === 0) {
+      return 'zero';
+    }
+    if (el === 1) {
+      return 'one';
+    }
+    if (el === 2) {
+      return 'two';
+    }
+    if (el === 3) {
+      return 'three';
+    }
+    if (el === 4) {
+      return 'four';
+    }
+    if (el === 5) {
+      return 'five';
+    }
+    if (el === 6) {
+      return 'six';
+    }
+    if (el === 7) {
+      return 'seven';
+    }
+    if (el === 8) {
+      return 'eight';
+    }
+    return 'nine';
+  });
+  return res;
 }
 
 /**
@@ -406,8 +484,12 @@ function getFalsyValuesCount(arr) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurences(/* arr, item */) {
-  throw new Error('Not implemented');
+function findAllOccurences(arr, item) {
+  const res = arr.map((el) => (`${el}` === `${item}` ? el : ''));
+  if (item === true || item === false) {
+    return res.map((el) => (el === item ? el : '')).filter((el) => el !== '').length;
+  }
+  return res.filter((el) => el !== '').length;
 }
 
 /**
