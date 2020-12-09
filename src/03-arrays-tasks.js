@@ -558,8 +558,42 @@ function sortCitiesArray(arr) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const ARRAY = [];
+  const START = 0;
+
+  function fillArray(number) {
+    if (number >= n) {
+      return ARRAY;
+    }
+
+    const ROW = n;
+    ARRAY.push([]);
+
+    function addRow(ro) {
+      if (ro === 0) {
+        return 1;
+      }
+
+      if (ro - 1 === number) {
+        ARRAY[number].push(1);
+      } else {
+        ARRAY[number].push(0);
+      }
+
+      const newRo = ro - 1;
+      return addRow(newRo);
+    }
+
+    addRow(ROW);
+
+    ARRAY[number].reverse();
+
+    const newNum = number + 1;
+    return fillArray(newNum);
+  }
+
+  return fillArray(START);
 }
 
 /**
@@ -659,8 +693,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.reduce((res, cur) => res.concat(childrenSelector(cur)), []);
 }
 
 
@@ -676,8 +710,18 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  function chooseElement(array, index) {
+    if (index.length === 1) {
+      return array[index[0]];
+    }
+
+    const newArr = array[indexes[0]];
+    const newIndexes = index.slice(1);
+    return chooseElement(newArr, newIndexes);
+  }
+
+  return chooseElement(arr, indexes);
 }
 
 
@@ -699,8 +743,22 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length < 2) {
+    return arr;
+  }
+  if (arr.length % 2 !== 0) {
+    const NEW_ARR = arr;
+    const MIDDLE = Math.ceil(arr.length / 2);
+    const NEW_PART = NEW_ARR.slice(0, MIDDLE);
+    const RESULT = arr.slice(MIDDLE);
+    return RESULT.concat(arr.splice(MIDDLE - 1, 1)).concat(NEW_PART).slice(0, -1);
+  }
+  const NEW_ARR = arr;
+  const MIDDLE = Math.floor(arr.length / 2);
+  const NEW_PART = NEW_ARR.slice(0, MIDDLE);
+  const RESULT = arr.slice(MIDDLE);
+  return RESULT.concat(NEW_PART);
 }
 
 

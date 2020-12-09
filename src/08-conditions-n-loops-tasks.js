@@ -289,8 +289,46 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const arr = String(ccn).split('');
+  const RES_ONE = [];
+  const RES_TWO = [];
+  if (arr.length % 2 !== 0) {
+    for (let i = 0; i < arr.length; i += 1) {
+      if (i % 2 !== 0) {
+        let number = arr[i] * 2;
+        if (String(number).length > 1) {
+          const THIS_NUMBER = String(number);
+          number = Number(THIS_NUMBER[0]) + Number(THIS_NUMBER[1]);
+          RES_ONE.push(number);
+        } else {
+          RES_ONE.push(number);
+        }
+      } else {
+        RES_TWO.push(Number(arr[i]));
+      }
+    }
+  } else {
+    for (let i = 0; i < arr.length; i += 1) {
+      if (i % 2 === 0) {
+        let number = arr[i] * 2;
+        if (String(number).length > 1) {
+          const THIS_NUMBER = String(number);
+          number = Number(THIS_NUMBER[0]) + Number(THIS_NUMBER[1]);
+          RES_ONE.push(number);
+        } else {
+          RES_ONE.push(number);
+        }
+      } else {
+        RES_TWO.push(Number(arr[i]));
+      }
+    }
+  }
+
+  const ONE = RES_ONE.reduce((array, cur) => array + cur);
+  const TWO = RES_TWO.reduce((array, cur) => array + cur);
+
+  return (ONE + TWO) % 10 === 0;
 }
 
 /**
@@ -345,8 +383,8 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  return str;
 }
 
 
