@@ -67,7 +67,7 @@ function getPowerFunction(exponent) {
  *   getPolynom()      => null
  */
 function getPolynom() {
-  return 10;
+  throw new Error('Not implemented');
 }
 
 
